@@ -1,15 +1,17 @@
-const express = require('express');
-const fs = require('fs');
-
+const express = require("express");
 const router = express.Router();
-const PATH = __dirname;
-const removeExtension = file => file.split(".").shift();
+const {
+  getTasks,
+  postTask,
+  getTask,
+  putTask,
+  delTask,
+} = require("../controllers/task");
 
+router.get("/", getTasks);
+router.post("/", postTask);
+router.get("/:id", getTask);
+router.put("/:id", putTask);
+router.delete("/:id", delTask);
 
-fs.readdirSync(PATH).filter( file => {
-    console.log(file);
-    const ruta = removeExtension(file);
-    ruta !== "index" &&  router.use(`/${ruta}`, require(`./${file}`));
-}) 
-
-module.exports = router; 
+module.exports = router;
